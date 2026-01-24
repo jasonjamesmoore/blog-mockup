@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+AGENTS.md
+ui-decisions.md
+docs/
 
 # debug
 npm-debug.log*
