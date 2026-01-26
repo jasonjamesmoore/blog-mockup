@@ -1,39 +1,58 @@
 import { PostMeta } from "@/components/blog/post-meta";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-export function PostCard() {
+type PostCardProps = {
+  title: string;
+  href: string;
+  imageSrc: string;
+  category: string;
+  date: string;
+  author: string;
+};
+
+export function PostCard({
+  title,
+  href,
+  imageSrc,
+  category,
+  date,
+  author,
+}: PostCardProps) {
   return (
-    <Card
-      className="
-        group cursor-pointer
-        transition-[transform,box-shadow,background-color] duration-200
-        hover:-translate-y-0.5 hover:shadow-lg
-        focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background
-        dark:hover:shadow-none
-        dark:hover:ring-1 dark:hover:ring-ring/50
-        dark:hover:shadow-[0_0_0_1px_hsl(var(--ring)/0.35),0_0_24px_hsl(var(--ring)/0.18)]
-      "
-    >
+    <Card className="group cursor-pointer border-border/40 bg-transparent shadow-none transition-colors duration-200 hover:bg-muted/20 hover:border-border/70 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
       <CardHeader>
-        <div className="aspect-[16/9] w-full overflow-hidden rounded-lg border border-border bg-muted" />
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border bg-muted">
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          />
+        </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <h2 className="line-clamp-2 font-medium text-foreground">
             <Link
-              href="/post/example" // placeholder route
-              className="focus:outline-none"
+              href={href}
+              className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              Post title placeholder goes here
+              {title}
             </Link>
           </h2>
-          <PostMeta
-            author="Author"
-            date="Date"
-            category="Category"
-            showAvatar
-          />
+          <div className="flex items-center gap-2">
+            <PostMeta
+              author={author}
+              date={date}
+              category={category}
+              showAvatar
+            />
+            <ArrowRight className="h-4 w-4 translate-x-1 text-muted-foreground opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:translate-x-0 group-focus-within:opacity-100" />
+          </div>
         </div>
       </CardContent>
     </Card>
