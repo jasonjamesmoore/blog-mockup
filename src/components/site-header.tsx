@@ -7,37 +7,92 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Laptop } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export function SiteHeader() {
+// Theme helper function
+function ThemeToggle({ className }: { className?: string }) {
   const { setTheme } = useTheme();
 
   return (
-    <header className="py-6">
-      <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-6">
-        <div>Blog</div>
-        <nav className="flex items-center gap-4">
-          <span>Home</span>
-          <span>About</span>
-        </nav>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">
-              Theme
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={cn("h-9 w-9 px-0", className)}
+          aria-label="Theme"
+        >
+          <Laptop className="h-4 w-4" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+export function SiteHeader() {
+  return (
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur supports-backdrop-filter:bg-background/60">
+      <div className="relative">
+        <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-6">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <span className="relative inline-block h-5 w-5 rounded-md border border-border/70 bg-muted/70">
+              <span className="absolute left-1 top-1 h-1.5 w-1.5 rounded-full bg-foreground/50" />
+            </span>
+            <span className="text-sm font-medium tracking-tight">Signal</span>
+          </Link>
+
+          {/* Nav */}
+          <nav className="flex items-center gap-6 text-sm text-muted-foreground">
+            <Link href="/" className="hover:text-foreground">
+              Home
+            </Link>
+            <Link href="/blog" aria-current="page" className="text-foreground">
+              Blog
+            </Link>
+            <Link href="/about" className="hover:text-foreground">
+              About
+            </Link>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/login">Log in</Link>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("light")}>
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
-              Dark
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <Button size="sm" asChild>
+              <Link href="/signup">Sign up</Link>
+            </Button>
+
+            {/* Mobile theme toggle */}
+            <div className="xl:hidden">
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop rail theme toggle */}
+        <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 xl:block">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
