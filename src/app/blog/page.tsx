@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const featuredPost = {
   title: "Designing a unified event pipeline for product telemetry",
-  href: "/blog/unified-event-pipeline",
+  href: "/blog/designing-a-unified-event-pipeline",
   imageSrc: "/images/posts/grad-01.svg",
   category: "Engineering",
   date: "Jan 8, 2026",
