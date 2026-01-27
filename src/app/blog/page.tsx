@@ -75,12 +75,12 @@ export default function BlogIndex() {
       <main className="py-8 md:py-10">
         <MainContainer>
           <div className="space-y-0">
-            <div className="space-y-8">
+            <div className="space-y-10">
               <h1 className="text-4xl font-semibold tracking-tight leading-[1.05] md:text-5xl">
                 Blog
               </h1>
               <div className="space-y-3">
-                <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <Tabs defaultValue="all">
                     <TabsList>
                       <TabsTrigger value="all">All</TabsTrigger>
@@ -93,7 +93,7 @@ export default function BlogIndex() {
                 </div>
               </div>
             </div>
-            <div className="mt-10 md:mt-12 space-y-5">
+            <div className="mt-14 md:mt-16 space-y-5">
               <FeaturedPostCard
                 title={featuredPost.title}
                 href={featuredPost.href}
