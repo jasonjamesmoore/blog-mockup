@@ -116,22 +116,25 @@ export function SiteHeader() {
         {/* Right Actions cluster*/}
         <div className="ml-auto flex items-center gap-2">
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-3">
             <ThemeToggle />
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/login">Log in</Link>
-            </Button>
+            <Link
+              href="/login"
+              className="text-sm text-muted-foreground hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              Log in
+            </Link>
             <Button size="sm" asChild>
               <Link href="/signup">Sign up</Link>
             </Button>
           </div>
 
           {/* Mobile Actions (stay outside burger) */}
-          <div className="lg:hidden flex items-center gap-2">
+          <div className="lg:hidden flex items-center gap-3">
             <ThemeToggle />
             <Link
               href="/login"
-              className="text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="text-sm text-muted-foreground hover:text-foreground focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               Log in
             </Link>
