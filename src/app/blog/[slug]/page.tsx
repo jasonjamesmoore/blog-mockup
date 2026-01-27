@@ -14,7 +14,13 @@ const post = {
   imageSrc: "/images/posts/grad-01.svg",
 };
 
-export default function BlogPostPage() {
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [{ slug: "designing-a-unified-event-pipeline" }];
+}
+
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
   return (
     <div className="min-h-screen">
       <SiteHeader />
