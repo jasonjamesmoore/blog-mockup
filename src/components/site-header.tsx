@@ -9,8 +9,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Laptop } from "lucide-react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+
+// Navigation items
+const NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+] as const;
 
 // Theme helper function
 function ThemeToggle({ className }: { className?: string }) {
@@ -45,6 +53,23 @@ function ThemeToggle({ className }: { className?: string }) {
 }
 
 export function SiteHeader() {
+  const pathname = usePathname();
+
+  // Derive active state for each nav item during render
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    if (href === "/blog")
+      return pathname === "/blog" || pathname.startsWith("/blog/");
+    return pathname === href;
+  };
+
+  // Compute link classes based on active state
+  const getLinkClasses = (href: string) =>
+    cn(
+      "text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      isActive(href) && "text-foreground",
+    );
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/40 bg-background/70 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="relative">
@@ -61,16 +86,24 @@ export function SiteHeader() {
           </Link>
 
           {/* Nav */}
-          <nav className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">
-              Home
-            </Link>
-            <Link href="/blog" aria-current="page" className="text-foreground">
-              Blog
-            </Link>
-            <Link href="/about" className="hover:text-foreground">
-              About
-            </Link>
+          <nav className="flex items-center gap-6 text-sm">
+            {NAV_ITEMS.map(({ label, href }) => {
+              const active = isActive(href);
+
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={cn(
+                    "text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    active && "text-foreground",
+                  )}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Actions */}
